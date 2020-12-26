@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.mcnative.actionframework</groupId>
+    <artifactId>McNativeActionFramework</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.0.0-SNAPSHOT</version>
+
+    <modules>
+        <module>mcnative-actionframework-endpoint</module>
+        <module>mcnative-actionframework-connector-rabbitmq</module>
+    </modules>
+
+    <properties>
+        <!-- Project settings -->
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Maven plugins -->
+        <plugin.compiler.version>3.8.1</plugin.compiler.version>
+        <plugin.source.version>3.2.1</plugin.source.version>
+        <plugin.shade.version>3.2.1</plugin.shade.version>
+        <plugin.jar.version>3.2.0</plugin.jar.version>
+
+        <!-- Dependency version -->
+        <dependency.pretronic.libraries>1.2.32.170-SNAPSHOT</dependency.pretronic.libraries>
+        <dependency.pretronic.databasequery>1.2.51.78-SNAPSHOT</dependency.pretronic.databasequery>
+        <dependency.mcnative.sdk>1.0.0.5</dependency.mcnative.sdk>
+
+        <dependency.rabbitmq>5.10.0</dependency.rabbitmq>
+        <dependency.dotenv>2.2.0</dependency.dotenv>
+        <dependency.netty>4.1.56.Final</dependency.netty>
+        <dependency.dns-java>3.1.5</dependency.dns-java>
+        <dependency.mariadb>2.6.0</dependency.mariadb>
+        <dependency.sentry>3.1.0</dependency.sentry>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>pretronic</id>
+            <url>https://repository.pretronic.net/repository/pretronic/</url>
+        </repository>
+    </repositories>
+
+</project>
