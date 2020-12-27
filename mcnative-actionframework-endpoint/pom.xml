@@ -9,6 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <build>
+        <finalName>mcnative-actionframework-endpoint</finalName>
+    </build>
+
     <artifactId>mcnative-actionframework-endpoint</artifactId>
 
     <properties>
