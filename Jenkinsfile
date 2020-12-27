@@ -12,7 +12,7 @@ final String BRANCH_DEVELOPMENT = "development"
 final String BRANCH_BETA = null
 final String BRANCH_MASTER = "master"
 
-String PROJECT_NAME = "McNativeActionFramework"
+String PROJECT_NAME = "McNativeActionFrameworkService"
 
 boolean JAVADOCS_ENABLED = false
 String JAVADOCS_NAME = "mcnative-actionframework"
