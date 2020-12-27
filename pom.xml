@@ -8,7 +8,7 @@
     <groupId>org.mcnative.actionframework.service</groupId>
     <artifactId>McNativeActionFrameworkService</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.1.19-SNAPSHOT</version>
+    <version>1.0.2.20-SNAPSHOT</version>
 
     <modules>
         <module>mcnative-actionframework-service-endpoint</module>
