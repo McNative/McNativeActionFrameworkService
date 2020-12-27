@@ -48,6 +48,11 @@ public class MAFRabbitMQConnector implements DeliverCallback {
             }else{
                 this.channel.queueDeclare(queue,true,false,!keepAlive,null);
             }
+
+            for (MAFActionSubscription subscription : this.subscriptions) {
+                channel.queueBind(this.queue,EXCHANGE_BROADCAST,"#.#."+subscription.getNamespace()+"."+subscription.getName());
+            }
+
             this.channel.basicConsume(this.queue,true,this,consumerTag -> { });
         }catch (IOException | TimeoutException e){
             throw new OperationFailedException(e);
@@ -57,8 +62,10 @@ public class MAFRabbitMQConnector implements DeliverCallback {
     public <T extends MAFAction> void subscribeAction(Class<T> actionClass, MAFActionListener<T> listener){
         MAFAction action = UnsafeInstanceCreator.newInstance(actionClass);
         try {
-            channel.queueBind(this.queue,EXCHANGE_BROADCAST,"#.#."+action.getNamespace()+"."+action.getName());
             this.subscriptions.add(new MAFActionSubscription(action.getNamespace(),action.getName(),actionClass,listener));
+            if(channel != null){
+                channel.queueBind(this.queue,EXCHANGE_BROADCAST,"#.#."+action.getNamespace()+"."+action.getName());
+            }
         } catch (IOException e) {
             throw new IORuntimeException(e);
         }
@@ -111,5 +118,4 @@ public class MAFRabbitMQConnector implements DeliverCallback {
             throw e;
         }
     }
-
 }
