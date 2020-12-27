@@ -45,6 +45,16 @@
             <id>pretronic</id>
             <url>https://repository.pretronic.net/repository/pretronic/</url>
         </repository>
+        <repository>
+            <id>pretronic</id>
+            <url>https://repository.pretronic.net/repository/pretronic-internal/</url>
+        </repository>
     </repositories>
 
+    <distributionManagement>
+        <repository>
+            <id>pretronic</id>
+            <url>https://repository.pretronic.net/repository/pretronic-internal/</url>
+        </repository>
+    </distributionManagement>
 </project>
