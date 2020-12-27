@@ -21,15 +21,23 @@ public class MAFRabbitMQConnector implements DeliverCallback {
 
     private static final String EXCHANGE_BROADCAST = "maf-broadcast";
 
-    private final Connection connection;
-    private final Channel channel;
-    private final String queue;
-
+    private final ConnectionFactory factory;
+    private final boolean keepAlive;
     private final List<MAFActionSubscription> subscriptions;
 
+    private Connection connection;
+    private Channel channel;
+    private String queue;
+
     private MAFRabbitMQConnector(ConnectionFactory factory,String queue, boolean keepAlive){
+        this.factory = factory;
+        this.keepAlive = keepAlive;
+        this.subscriptions = new ArrayList<>();
+        this.queue = queue;
+    }
+
+    public void connect(){
         try {
-            this.subscriptions = new ArrayList<>();
             this.connection = factory.newConnection();
 
             this.channel = connection.createChannel();
@@ -38,7 +46,6 @@ public class MAFRabbitMQConnector implements DeliverCallback {
             if(queue == null){
                 this.queue = this.channel.queueDeclare().getQueue();
             }else{
-                this.queue = queue;
                 this.channel.queueDeclare(queue,true,false,!keepAlive,null);
             }
             this.channel.basicConsume(this.queue,true,this,consumerTag -> { });
