@@ -111,4 +111,5 @@ public class MAFRabbitMQConnector implements DeliverCallback {
             throw e;
         }
     }
+
 }
