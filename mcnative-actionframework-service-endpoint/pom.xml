@@ -3,14 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>McNativeActionFramework</artifactId>
-        <groupId>org.mcnative.actionframework</groupId>
+        <artifactId>McNativeActionFrameworkService</artifactId>
+        <groupId>org.mcnative.actionframework.service</groupId>
         <version>1.0.0.3</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <build>
-        <finalName>mcnative-actionframework-endpoint</finalName>
+        <finalName>mcnative-actionframework-service-endpoint</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -19,7 +19,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>org.mcnative.actionframework.server.MAFEndpointBootstrap</mainClass>
+                            <mainClass>org.mcnative.actionframework.service.endpoint.MAFEndpointBootstrap</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -43,7 +43,7 @@
         </plugins>
     </build>
 
-    <artifactId>mcnative-actionframework-endpoint</artifactId>
+    <artifactId>mcnative-actionframework-service-endpoint</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

@@ -1,4 +1,4 @@
-package org.mcnative.actionframework.server.service.connection;
+package org.mcnative.actionframework.service.endpoint.service.connection;
 
 import io.netty.channel.Channel;
 import org.mcnative.actionframework.sdk.common.action.MAFActionExecutor;

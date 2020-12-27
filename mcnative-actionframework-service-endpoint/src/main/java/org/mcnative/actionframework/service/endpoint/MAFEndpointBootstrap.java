@@ -1,4 +1,4 @@
-package org.mcnative.actionframework.server;
+package org.mcnative.actionframework.service.endpoint;
 
 import io.sentry.Sentry;
 import net.pretronic.databasequery.api.driver.config.DatabaseDriverConfig;
@@ -9,20 +9,19 @@ import net.pretronic.libraries.logging.PretronicLoggerFactory;
 import net.pretronic.libraries.logging.bridge.slf4j.SLF4JStaticBridge;
 import net.pretronic.libraries.logging.io.LoggingPrintStream;
 import org.mcnative.actionframework.sdk.common.protocol.packet.handshake.authentication.AuthenticationMethod;
-import org.mcnative.actionframework.server.authentication.KeyAuthenticationService;
-import org.mcnative.actionframework.server.broker.MessageBroker;
-import org.mcnative.actionframework.server.broker.RabbitMqBroker;
+import org.mcnative.actionframework.service.endpoint.authentication.KeyAuthenticationService;
+import org.mcnative.actionframework.service.endpoint.broker.MessageBroker;
+import org.mcnative.actionframework.service.endpoint.broker.RabbitMqBroker;
+import org.mcnative.actionframework.service.endpoint.util.Environment;
 
 import java.net.InetSocketAddress;
-
-import static org.mcnative.actionframework.server.util.Environment.*;
 
 public class MAFEndpointBootstrap {
 
     public static void main(String[] args) {
-        boolean development = getEnv("ENVIRONMENT","development").equalsIgnoreCase("development");
+        boolean development = Environment.getEnv("ENVIRONMENT","development").equalsIgnoreCase("development");
 
-        String dsn = getEnvOrNull("SENTRY_DSN");
+        String dsn = Environment.getEnvOrNull("SENTRY_DSN");
         if(dsn != null && !development){
             Sentry.init(options -> options.setDsn(dsn));
         }
@@ -32,22 +31,22 @@ public class MAFEndpointBootstrap {
         SLF4JStaticBridge.trySetLogger(logger);
 
         try {
-            String host = getEnv("HOST","localhost");
-            int port = getIntEnv("PORT",9730);
+            String host = Environment.getEnv("HOST","localhost");
+            int port = Environment.getIntEnv("PORT",9730);
             InetSocketAddress address = new InetSocketAddress(host,port);
 
-            String database = getEnv("DATABASE_NAME");
+            String database = Environment.getEnv("DATABASE_NAME");
 
             DatabaseDriverConfig<?> config = new SQLDatabaseDriverConfigBuilder()
-                    .setAddress(InetSocketAddress.createUnresolved(getEnv("DATABASE_HOST"), getIntEnv("DATABASE_PORT",3306)))
-                    .setDialect(Dialect.byName(getEnv("DATABASE_DIALECT",Dialect.MARIADB.getName())))
-                    .setUsername(getEnv("DATABASE_USERNAME"))
-                    .setPassword(getEnv("DATABASE_PASSWORD"))
+                    .setAddress(InetSocketAddress.createUnresolved(Environment.getEnv("DATABASE_HOST"), Environment.getIntEnv("DATABASE_PORT",3306)))
+                    .setDialect(Dialect.byName(Environment.getEnv("DATABASE_DIALECT",Dialect.MARIADB.getName())))
+                    .setUsername(Environment.getEnv("DATABASE_USERNAME"))
+                    .setPassword(Environment.getEnv("DATABASE_PASSWORD"))
                     .build();
 
-            MessageBroker broker = new RabbitMqBroker(getEnv("RABBIT_HOST","localhost")
-                    ,getEnv("RABBIT_USERNAME","localhost")
-                    ,getEnv("RABBIT_PASSWORD","K2NtCrSiNvQ7qkzs#hSKSrhzDE24i8bswFcYrwWB"));
+            MessageBroker broker = new RabbitMqBroker(Environment.getEnv("RABBIT_HOST","localhost")
+                    , Environment.getEnv("RABBIT_USERNAME","localhost")
+                    , Environment.getEnv("RABBIT_PASSWORD","K2NtCrSiNvQ7qkzs#hSKSrhzDE24i8bswFcYrwWB"));
 
             MAFEndpoint endpoint = new MAFEndpoint(address,broker,logger);
             endpoint.getConnectionController().registerAuthenticationService(AuthenticationMethod.NETWORK_KEY,new KeyAuthenticationService(config,database));

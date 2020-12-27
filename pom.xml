@@ -5,14 +5,14 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.mcnative.actionframework</groupId>
-    <artifactId>McNativeActionFramework</artifactId>
+    <groupId>org.mcnative.actionframework.service</groupId>
+    <artifactId>McNativeActionFrameworkService</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0.3</version>
 
     <modules>
-        <module>mcnative-actionframework-endpoint</module>
-        <module>mcnative-actionframework-connector-rabbitmq</module>
+        <module>mcnative-actionframework-service-endpoint</module>
+        <module>mcnative-actionframework-service-connector-rabbitmq</module>
     </modules>
 
     <properties>

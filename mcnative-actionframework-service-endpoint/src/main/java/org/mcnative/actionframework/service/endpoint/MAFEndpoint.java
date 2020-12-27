@@ -1,14 +1,13 @@
-package org.mcnative.actionframework.server;
+package org.mcnative.actionframework.service.endpoint;
 
 import net.pretronic.libraries.concurrent.TaskScheduler;
 import net.pretronic.libraries.concurrent.simple.SimpleTaskScheduler;
 import net.pretronic.libraries.logging.PretronicLogger;
 import net.pretronic.libraries.logging.PretronicLoggerFactory;
 import net.pretronic.libraries.utility.interfaces.ObjectOwner;
-import org.mcnative.actionframework.server.broker.MessageBroker;
-import org.mcnative.actionframework.server.broker.RabbitMqBroker;
-import org.mcnative.actionframework.server.service.MAFService;
-import org.mcnative.actionframework.server.service.connection.ConnectionController;
+import org.mcnative.actionframework.service.endpoint.broker.MessageBroker;
+import org.mcnative.actionframework.service.endpoint.service.MAFService;
+import org.mcnative.actionframework.service.endpoint.service.connection.ConnectionController;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.TimeUnit;

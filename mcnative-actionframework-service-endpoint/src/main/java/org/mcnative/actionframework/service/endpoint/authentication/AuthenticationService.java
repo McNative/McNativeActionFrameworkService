@@ -1,4 +1,4 @@
-package org.mcnative.actionframework.server.authentication;
+package org.mcnative.actionframework.service.endpoint.authentication;
 
 import org.mcnative.actionframework.sdk.common.protocol.packet.handshake.authentication.Authentication;
 import org.mcnative.actionframework.sdk.common.protocol.packet.handshake.authentication.AuthenticationResult;

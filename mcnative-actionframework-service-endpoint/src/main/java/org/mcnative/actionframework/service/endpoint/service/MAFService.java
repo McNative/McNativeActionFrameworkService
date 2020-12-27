@@ -1,4 +1,4 @@
-package org.mcnative.actionframework.server.service;
+package org.mcnative.actionframework.service.endpoint.service;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBufAllocator;
@@ -7,8 +7,8 @@ import io.netty.handler.ssl.SslContext;
 import net.pretronic.libraries.utility.NettyUtil;
 import net.pretronic.libraries.utility.exception.OperationFailedException;
 import org.mcnative.actionframework.sdk.common.protocol.MAFProtocol;
-import org.mcnative.actionframework.server.MAFEndpoint;
-import org.mcnative.actionframework.server.service.connection.ConnectionHandler;
+import org.mcnative.actionframework.service.endpoint.MAFEndpoint;
+import org.mcnative.actionframework.service.endpoint.service.connection.ConnectionHandler;
 
 import java.net.InetSocketAddress;
 

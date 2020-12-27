@@ -1,6 +1,6 @@
-package org.mcnative.actionframework.server.broker;
+package org.mcnative.actionframework.service.endpoint.broker;
 
-import org.mcnative.actionframework.server.service.connection.ClientConnection;
+import org.mcnative.actionframework.service.endpoint.service.connection.ClientConnection;
 
 public interface MessageBroker {
 

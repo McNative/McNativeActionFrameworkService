@@ -1,4 +1,4 @@
-package org.mcnative.actionframework.server.service.connection;
+package org.mcnative.actionframework.service.endpoint.service.connection;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -8,7 +8,7 @@ import org.mcnative.actionframework.sdk.common.protocol.packet.PacketTransport;
 import org.mcnative.actionframework.sdk.common.protocol.packet.handshake.HandshakePacket;
 import org.mcnative.actionframework.sdk.common.protocol.packet.handshake.HandshakeResultPacket;
 import org.mcnative.actionframework.sdk.common.protocol.packet.handshake.authentication.AuthenticationResult;
-import org.mcnative.actionframework.server.MAFEndpoint;
+import org.mcnative.actionframework.service.endpoint.MAFEndpoint;
 
 import java.io.IOException;
 import java.util.UUID;

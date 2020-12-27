@@ -1,4 +1,4 @@
-package org.mcnative.actionframework.server.authentication;
+package org.mcnative.actionframework.service.endpoint.authentication;
 
 import net.pretronic.databasequery.api.Database;
 import net.pretronic.databasequery.api.collection.DatabaseCollection;

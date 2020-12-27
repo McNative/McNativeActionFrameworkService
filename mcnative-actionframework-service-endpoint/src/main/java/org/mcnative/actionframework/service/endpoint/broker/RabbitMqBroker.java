@@ -1,11 +1,11 @@
-package org.mcnative.actionframework.server.broker;
+package org.mcnative.actionframework.service.endpoint.broker;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import net.pretronic.libraries.utility.exception.OperationFailedException;
 import net.pretronic.libraries.utility.io.IORuntimeException;
-import org.mcnative.actionframework.server.service.connection.ClientConnection;
+import org.mcnative.actionframework.service.endpoint.service.connection.ClientConnection;
 
 import java.io.IOException;
 

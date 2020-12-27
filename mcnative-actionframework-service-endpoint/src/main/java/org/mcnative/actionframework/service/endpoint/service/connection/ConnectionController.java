@@ -1,4 +1,4 @@
-package org.mcnative.actionframework.server.service.connection;
+package org.mcnative.actionframework.service.endpoint.service.connection;
 
 import io.netty.channel.Channel;
 import net.pretronic.libraries.logging.PretronicLogger;
@@ -7,7 +7,7 @@ import org.mcnative.actionframework.sdk.common.action.DefaultMAFActionExecutor;
 import org.mcnative.actionframework.sdk.common.protocol.packet.handshake.HandshakePacket;
 import org.mcnative.actionframework.sdk.common.protocol.packet.handshake.authentication.AuthenticationMethod;
 import org.mcnative.actionframework.sdk.common.protocol.packet.handshake.authentication.AuthenticationResult;
-import org.mcnative.actionframework.server.authentication.AuthenticationService;
+import org.mcnative.actionframework.service.endpoint.authentication.AuthenticationService;
 
 import java.util.*;
 

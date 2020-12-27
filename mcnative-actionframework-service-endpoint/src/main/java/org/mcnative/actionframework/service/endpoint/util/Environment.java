@@ -1,4 +1,4 @@
-package org.mcnative.actionframework.server.util;
+package org.mcnative.actionframework.service.endpoint.util;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
