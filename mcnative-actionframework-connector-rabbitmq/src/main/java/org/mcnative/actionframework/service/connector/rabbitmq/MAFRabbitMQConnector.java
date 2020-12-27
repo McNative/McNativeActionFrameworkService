@@ -80,7 +80,7 @@ public class MAFRabbitMQConnector implements DeliverCallback {
 
         try{
             MAFAction action = UnsafeInstanceCreator.newInstance(subscription.getActionClass());
-            action.read(message.getBody());
+            action.readAction(message.getBody());
             subscription.getListener().callListener(new DefaultMAFActionExecutor(parseShort(network),parseShort(client)),action);
         }catch (Exception e){
             e.printStackTrace();
