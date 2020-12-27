@@ -10,6 +10,7 @@ import net.pretronic.libraries.logging.bridge.slf4j.SLF4JStaticBridge;
 import net.pretronic.libraries.logging.io.LoggingPrintStream;
 import org.mcnative.actionframework.sdk.common.protocol.packet.handshake.authentication.AuthenticationMethod;
 import org.mcnative.actionframework.server.authentication.KeyAuthenticationService;
+import org.mcnative.actionframework.server.broker.MessageBroker;
 import org.mcnative.actionframework.server.broker.RabbitMqBroker;
 
 import java.net.InetSocketAddress;
@@ -44,7 +45,11 @@ public class MAFEndpointBootstrap {
                     .setPassword(getEnv("DATABASE_PASSWORD"))
                     .build();
 
-            MAFEndpoint endpoint = new MAFEndpoint(address,new RabbitMqBroker(getEnv("RABBIT_HOST","localhost")),logger);
+            MessageBroker broker = new RabbitMqBroker(getEnv("RABBIT_HOST","localhost")
+                    ,getEnv("RABBIT_USERNAME","localhost")
+                    ,getEnv("RABBIT_PASSWORD","K2NtCrSiNvQ7qkzs#hSKSrhzDE24i8bswFcYrwWB"));
+
+            MAFEndpoint endpoint = new MAFEndpoint(address,broker,logger);
             endpoint.getConnectionController().registerAuthenticationService(AuthenticationMethod.NETWORK_KEY,new KeyAuthenticationService(config,database));
 
             endpoint.start();

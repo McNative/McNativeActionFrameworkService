@@ -17,10 +17,12 @@ public class RabbitMqBroker implements MessageBroker{
     private final Channel channel;
     //private final String directQueue;
 
-    public RabbitMqBroker(String host){
+    public RabbitMqBroker(String host,String username,String password){
         try {
             ConnectionFactory factory = new ConnectionFactory();
             factory.setHost(host);
+            factory.setUsername(username);
+            factory.setPassword(password);
             Connection connection = factory.newConnection();
 
             this.channel = connection.createChannel();
