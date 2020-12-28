@@ -5,7 +5,7 @@
     <parent>
         <artifactId>McNativeActionFrameworkService</artifactId>
         <groupId>org.mcnative.actionframework.service</groupId>
-        <version>1.0.2.20-SNAPSHOT</version>
+        <version>1.0.3.21-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
