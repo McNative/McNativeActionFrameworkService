@@ -1,15 +1,14 @@
 package org.mcnative.actionframework.service.connector.rabbitmq;
 
 import com.rabbitmq.client.*;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import net.pretronic.libraries.utility.Iterators;
 import net.pretronic.libraries.utility.StringUtil;
 import net.pretronic.libraries.utility.exception.OperationFailedException;
 import net.pretronic.libraries.utility.io.IORuntimeException;
 import net.pretronic.libraries.utility.reflect.UnsafeInstanceCreator;
-import org.mcnative.actionframework.sdk.common.action.DefaultMAFActionExecutor;
-import org.mcnative.actionframework.sdk.common.action.MAFAction;
-import org.mcnative.actionframework.sdk.common.action.MAFActionListener;
-import org.mcnative.actionframework.sdk.common.action.MAFActionSubscription;
+import org.mcnative.actionframework.sdk.common.action.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,6 +56,22 @@ public class MAFRabbitMQConnector implements DeliverCallback {
         }catch (IOException | TimeoutException e){
             throw new OperationFailedException(e);
         }
+    }
+
+    public void sendActionOnBehalf(MAFActionExecutor executor,MAFAction action){
+        String key = executor.getNetworkIdShort()
+                +"."+executor.getClientIdShort()
+                +"."+action.getNamespace()+"."+action.getName();
+
+        ByteBuf buffer = Unpooled.directBuffer();
+        action.write(buffer);
+
+        try {
+            channel.basicPublish(EXCHANGE_BROADCAST,key, null,buffer.array());
+        } catch (IOException e) {
+            throw new IORuntimeException(e);
+        }
+        buffer.release();
     }
 
     public <T extends MAFAction> void subscribeAction(Class<T> actionClass, MAFActionListener<T> listener){
