@@ -45,8 +45,8 @@ public class MAFEndpointBootstrap {
                     .build();
 
             MessageBroker broker = new RabbitMqBroker(Environment.getEnv("RABBIT_HOST","localhost")
-                    , Environment.getEnv("RABBIT_USERNAME","localhost")
-                    , Environment.getEnv("RABBIT_PASSWORD","K2NtCrSiNvQ7qkzs#hSKSrhzDE24i8bswFcYrwWB"));
+                    , Environment.getEnv("RABBIT_USERNAME","guest")
+                    , Environment.getEnv("RABBIT_PASSWORD","guest"));
 
             MAFEndpoint endpoint = new MAFEndpoint(address,broker,logger);
             endpoint.getConnectionController().registerAuthenticationService(AuthenticationMethod.NETWORK_KEY,new KeyAuthenticationService(config,database));

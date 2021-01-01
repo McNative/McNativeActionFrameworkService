@@ -8,7 +8,7 @@
     <groupId>org.mcnative.actionframework.service</groupId>
     <artifactId>McNativeActionFrameworkService</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.1.9-SNAPSHOT</version>
+    <version>1.0.3.21-SNAPSHOT</version>
 
     <modules>
         <module>mcnative-actionframework-service-endpoint</module>
@@ -30,7 +30,7 @@
         <!-- Dependency version -->
         <dependency.pretronic.libraries>1.2.32.170-SNAPSHOT</dependency.pretronic.libraries>
         <dependency.pretronic.databasequery>1.2.51.78-SNAPSHOT</dependency.pretronic.databasequery>
-        <dependency.mcnative.sdk>1.0.0.7-SNAPSHOT</dependency.mcnative.sdk>
+        <dependency.mcnative.sdk>1.0.8.18-SNAPSHOT</dependency.mcnative.sdk>
 
         <dependency.rabbitmq>5.10.0</dependency.rabbitmq>
         <dependency.dotenv>2.2.0</dependency.dotenv>

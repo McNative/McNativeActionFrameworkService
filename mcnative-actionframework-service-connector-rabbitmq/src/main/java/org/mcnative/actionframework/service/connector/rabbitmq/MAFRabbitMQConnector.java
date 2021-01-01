@@ -1,15 +1,14 @@
 package org.mcnative.actionframework.service.connector.rabbitmq;
 
 import com.rabbitmq.client.*;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import net.pretronic.libraries.utility.Iterators;
 import net.pretronic.libraries.utility.StringUtil;
 import net.pretronic.libraries.utility.exception.OperationFailedException;
 import net.pretronic.libraries.utility.io.IORuntimeException;
 import net.pretronic.libraries.utility.reflect.UnsafeInstanceCreator;
-import org.mcnative.actionframework.sdk.common.action.DefaultMAFActionExecutor;
-import org.mcnative.actionframework.sdk.common.action.MAFAction;
-import org.mcnative.actionframework.sdk.common.action.MAFActionListener;
-import org.mcnative.actionframework.sdk.common.action.MAFActionSubscription;
+import org.mcnative.actionframework.sdk.common.action.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,15 +20,23 @@ public class MAFRabbitMQConnector implements DeliverCallback {
 
     private static final String EXCHANGE_BROADCAST = "maf-broadcast";
 
-    private final Connection connection;
-    private final Channel channel;
-    private final String queue;
-
+    private final ConnectionFactory factory;
+    private final boolean keepAlive;
     private final List<MAFActionSubscription> subscriptions;
 
+    private Connection connection;
+    private Channel channel;
+    private String queue;
+
     private MAFRabbitMQConnector(ConnectionFactory factory,String queue, boolean keepAlive){
+        this.factory = factory;
+        this.keepAlive = keepAlive;
+        this.subscriptions = new ArrayList<>();
+        this.queue = queue;
+    }
+
+    public void connect(){
         try {
-            this.subscriptions = new ArrayList<>();
             this.connection = factory.newConnection();
 
             this.channel = connection.createChannel();
@@ -38,20 +45,42 @@ public class MAFRabbitMQConnector implements DeliverCallback {
             if(queue == null){
                 this.queue = this.channel.queueDeclare().getQueue();
             }else{
-                this.queue = queue;
                 this.channel.queueDeclare(queue,true,false,!keepAlive,null);
             }
+
+            for (MAFActionSubscription subscription : this.subscriptions) {
+                channel.queueBind(this.queue,EXCHANGE_BROADCAST,"#.#."+subscription.getNamespace()+"."+subscription.getName());
+            }
+
             this.channel.basicConsume(this.queue,true,this,consumerTag -> { });
         }catch (IOException | TimeoutException e){
             throw new OperationFailedException(e);
         }
     }
 
+    public void sendActionOnBehalf(MAFActionExecutor executor,MAFAction action){
+        String key = executor.getNetworkIdShort()
+                +"."+executor.getClientIdShort()
+                +"."+action.getNamespace()+"."+action.getName();
+
+        ByteBuf buffer = Unpooled.directBuffer();
+        action.write(buffer);
+
+        try {
+            channel.basicPublish(EXCHANGE_BROADCAST,key, null,buffer.array());
+        } catch (IOException e) {
+            throw new IORuntimeException(e);
+        }
+        buffer.release();
+    }
+
     public <T extends MAFAction> void subscribeAction(Class<T> actionClass, MAFActionListener<T> listener){
         MAFAction action = UnsafeInstanceCreator.newInstance(actionClass);
         try {
-            channel.queueBind(this.queue,EXCHANGE_BROADCAST,"#.#."+action.getNamespace()+"."+action.getName());
             this.subscriptions.add(new MAFActionSubscription(action.getNamespace(),action.getName(),actionClass,listener));
+            if(channel != null){
+                channel.queueBind(this.queue,EXCHANGE_BROADCAST,"#.#."+action.getNamespace()+"."+action.getName());
+            }
         } catch (IOException e) {
             throw new IORuntimeException(e);
         }
