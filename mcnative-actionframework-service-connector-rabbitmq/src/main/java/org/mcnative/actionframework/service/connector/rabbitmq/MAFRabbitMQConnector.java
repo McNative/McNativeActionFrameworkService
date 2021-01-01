@@ -63,7 +63,7 @@ public class MAFRabbitMQConnector implements DeliverCallback {
                 +"."+executor.getClientIdShort()
                 +"."+action.getNamespace()+"."+action.getName();
 
-        ByteBuf buffer = Unpooled.directBuffer();
+        ByteBuf buffer = Unpooled.buffer();
         action.write(buffer);
 
         try {
